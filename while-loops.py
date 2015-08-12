@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os, sys
+
 i = 0
 numbers = [] # Trying out lists instead of dicts
 
