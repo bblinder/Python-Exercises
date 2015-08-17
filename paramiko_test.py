@@ -17,14 +17,14 @@ password = getpass.getpass()
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(hostname=server, username=username, password=password)
 
-stdin, stdout, stderr = ssh.exec_command("uname -a")
-
-for line in stdout.readlines():
-	print line.strip()
-
-print "Done. Closing."
-
-ssh.close()
-
+try:
+	ssh.connect(hostname=server, username=username, password=password)
+	stdin, stdout, stderr = ssh.exec_command("uname -a")
+	for line in stdout.readlines():
+		print line.strip()
+		print "Done. Closing."
+	ssh.close()
+except paramiko.AuthenticationException:
+	print "Authentication Failed"
+	quit()
