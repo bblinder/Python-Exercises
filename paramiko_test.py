@@ -20,11 +20,12 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 try:
 	ssh.connect(hostname=server, username=username, password=password)
-	stdin, stdout, stderr = ssh.exec_command("uname -a")
+	stdin, stdout, stderr = ssh.exec_command("cat /proc/interrupts")
 	for line in stdout.readlines():
 		print line.strip()
-		print "Done. Closing."
+	print "Done. Closing."
 	ssh.close()
 except paramiko.AuthenticationException:
 	print "Authentication Failed"
 	quit()
+
