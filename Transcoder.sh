@@ -18,8 +18,7 @@ single_convert(){
 	exit 0
 }
 
-# "*.flv" in the loop below can technically be renamed to match whatever video format the
-# input is, though you'd do this at your own risk. It was mainly meant for FLVs :).
+# Using FLVs in this case (I have a lot of old videos...)
 
 batch_convert(){
 	for fname in *.flv; do
