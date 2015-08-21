@@ -27,5 +27,5 @@ try:
 	ssh.close()
 except paramiko.AuthenticationException:
 	print "Authentication Failed"
-	quit()
+	sys.exit()
 
