@@ -12,7 +12,7 @@ current_directory=$(pwd)
 single_convert(){
 	echo "Drag and Drop file HERE : "
 	
-	while read I; do
+	while read -r I; do
 		ffmpeg -i "${I}" -c:v libx264 -c:a libvo_aacenc -crf 20 -r 30 \
 			"${I/%.*/.mp4}" > /dev/null & 2>/dev/null
 	done
@@ -28,7 +28,7 @@ batch_convert(){
 }
 
 mp3_single(){
-	while read I ; do
+	while read -r I ; do
 		ffmpeg -i "${I}" -c:a libmp3lame -b:a 320k "${I/%.*/.mp3}"
 	done
 }
