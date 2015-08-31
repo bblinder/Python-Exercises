@@ -26,7 +26,7 @@ batch_convert(){
 	done
 }
 
-ffmpeg_check(){
+check(){
 	if [[ ! ( -f /usr/bin/ffmpeg || -f /usr/local/bin/ffmpeg ) ]] ; then
 		echo "FFmpeg not installed!"
 		echo "Please install it at: https://ffmpeg.org/download.html"
@@ -41,7 +41,7 @@ check_MP4(){
 
 		read response
 		if [[ $response == "y" ]] ; then
-			ffmpeg_check
+			check
 			batch_convert
 		
 		elif [[ $response == "n" ]] ; then
@@ -61,7 +61,7 @@ read input
 
 case "$input" in
 	1)
-		ffmpeg_check
+		check
 		single_convert
 		;;
 	2)
@@ -69,7 +69,7 @@ case "$input" in
 		read file_path 
 		cp $current_directory/Converter $file_path
 		cd $file_path 
-		ffmpeg_check
+		check
 		check_MP4
 		batch_convert
 		rm $file_path/Converter
