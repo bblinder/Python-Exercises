@@ -3,6 +3,7 @@
 ##########
 # FLV converter
 # Converts single files or entire directory of FLV files to MP4s with H.264 video and AAC audio.
+# Can alternatively convert to MP3 files.
 # Assumes you have a build of FFmpeg -- static, git, etc -- living in your $PATH (it looks for `/usr/local# /bin` or `/usr/bin` by default).
 ##########
 
@@ -18,11 +19,17 @@ single_convert(){
 	exit 0
 }
 
-# Using FLVs in this case (I have a lot of old videos...)
+# Using FLVs in this case (I have a lot of old flash videos...)
 
 batch_convert(){
 	for fname in *.flv; do
 		ffmpeg -i "$fname" -c:v libx264 -c:a libvo_aacenc -crf 20 -r 30 "${fname%.*}.mp4"
+	done
+}
+
+mp3_convert(){
+	for fname in *.flv ; do
+		ffmpeg -i "$fname" -c:a libmp3lame -b:a 320k "${fname%.*}.mp3"
 	done
 }
 
@@ -53,10 +60,11 @@ check_MP4(){
 echo "*******************"
 echo "Video Codec : libx264"
 echo "Audio Codec : libvo_aacenc"
+echo "Audio Codec (for MP3s) : libmp3lame"
 echo "*******************"
 echo "Type (1) to convert a single file."
 echo "Type (2) to convert a batch."
-
+echo "Type (3) to convert to MP3 file."
 read input
 
 case "$input" in
@@ -65,17 +73,27 @@ case "$input" in
 		single_convert
 		;;
 	2)
-		echo "Please drag (or fill in the file path of) the folder here, and press ENTER."
+		echo "Please drag (or fill in the file path of) the folder here, and press ENTER.)"
 		read file_path 
-		cp $current_directory/Converter $file_path
+		cp $current_directory/Transcoder.sh $file_path
 		cd $file_path 
 		check_ffmpeg
 		check_MP4
 		batch_convert
-		rm $file_path/Converter
+		rm $file_path/Transcoder.sh
 		;;
+	3)
+		echo "Please drag (or fill in the file path of) the folder here, and press ENTER.)"
+		read file_path
+		cp $current_directory/Transcoder.sh $file_path
+		cd $file_path
+		check_ffmpeg
+		mp3_convert
+		rm $file_path/Transcoder.sh
+		;;
+
 	*)
-		echo "Please type (1) or (2)"
+		echo "Please type (1) or (2) or (3)"
 		exit 1
 		;;
 esac
