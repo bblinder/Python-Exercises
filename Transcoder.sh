@@ -69,10 +69,10 @@ echo "Audio Codec : libvo_aacenc"
 echo "Audio Codec (for MP3s) : libmp3lame"
 echo "*******************"
 echo "Type (1) to convert a single file to MP4"
-echo "Type (2) to convert a batch to MP4."
+echo "Type (2) to convert a batch to MP4"
 echo
 echo "Type (3) to convert a single file to MP3"
-echo "Type (4) to convert a batch to MP3."
+echo "Type (4) to convert a batch to MP3"
 read input
 
 case "$input" in
