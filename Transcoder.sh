@@ -27,7 +27,13 @@ batch_convert(){
 	done
 }
 
-mp3_convert(){
+mp3_single(){
+	while read I ; do
+		ffmpeg -i "${I}" -c:a libmp3lame -b:a 320k "${I/%.*/.mp3}"
+	done
+}
+
+mp3_batch(){
 	for fname in *.flv ; do
 		ffmpeg -i "$fname" -c:a libmp3lame -b:a 320k "${fname%.*}.mp3"
 	done
@@ -62,9 +68,11 @@ echo "Video Codec : libx264"
 echo "Audio Codec : libvo_aacenc"
 echo "Audio Codec (for MP3s) : libmp3lame"
 echo "*******************"
-echo "Type (1) to convert a single file."
-echo "Type (2) to convert a batch."
-echo "Type (3) to convert to MP3 file."
+echo "Type (1) to convert a single file to MP4"
+echo "Type (2) to convert a batch to MP4."
+echo
+echo "Type (3) to convert a single file to MP3"
+echo "Type (4) to convert a batch to MP3."
 read input
 
 case "$input" in
@@ -73,7 +81,7 @@ case "$input" in
 		single_convert
 		;;
 	2)
-		echo "Please drag (or fill in the file path of) the folder here, and press ENTER.)"
+		echo "Please drag (or fill in the file path of) the folder here, and press ENTER."
 		read file_path 
 		cp $current_directory/Transcoder.sh $file_path
 		cd $file_path 
@@ -83,17 +91,22 @@ case "$input" in
 		rm $file_path/Transcoder.sh
 		;;
 	3)
-		echo "Please drag (or fill in the file path of) the folder here, and press ENTER.)"
+		echo "Drag and Drop file HERE: "
+		check_ffmpeg
+		mp3_single
+		;;
+	4)
+		echo "Please drag (or fill in the file path of) the folder here, and press ENTER."
 		read file_path
 		cp $current_directory/Transcoder.sh $file_path
 		cd $file_path
 		check_ffmpeg
-		mp3_convert
+		mp3_batch
 		rm $file_path/Transcoder.sh
 		;;
 
 	*)
-		echo "Please type (1) or (2) or (3)"
+		echo "Please select options {1-4}"
 		exit 1
 		;;
 esac
