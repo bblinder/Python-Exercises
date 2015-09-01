@@ -20,6 +20,9 @@ single_convert(){
 }
 
 # Using FLVs in this case (I have a lot of old flash videos...)
+# Decided on libvo_aacenc; not the greatest AAC encoder out there, but it's quick, easy, and for
+# most purposes "good enough". The native ffmpeg AAC profile is good, but experimental, and fdk_aac is
+# arguably the best quality, but is licensed.
 
 batch_convert(){
 	for fname in *.flv; do
