@@ -67,8 +67,8 @@ check_MP4(){
 }
 
 echo "*******************"
-echo "Video Codec : libx264"
-echo "Audio Codec : libvo_aacenc"
+echo "Video Codec : H.264 (libx264)"
+echo "Audio Codec : AAC (libfdk_aac)"
 echo "Audio Codec (for MP3s) : libmp3lame"
 echo "*******************"
 echo "Type (1) to convert a single file to MP4"
