@@ -20,9 +20,6 @@ single_convert(){
 }
 
 # Using FLVs in this case (I have a lot of old flash videos...)
-# Decided on libvo_aacenc; not the greatest AAC encoder out there, but it's quick, easy, and for
-# most purposes "good enough". The native ffmpeg AAC profile is good, but experimental, and fdk_aac is
-# arguably the best quality, but is licensed.
 
 batch_convert(){
 	for fname in *.flv; do
@@ -55,7 +52,7 @@ check_MP4(){
 		echo "'${fname%.*}.mp4' already exists!"
 		echo "Do you want to overwrite it? [y/n]"
 
-		read response
+		read -r response
 		if [[ $response == "y" ]] ; then
 			check_ffmpeg
 			batch_convert
@@ -76,7 +73,7 @@ echo "Type (2) to convert a batch to MP4"
 echo
 echo "Type (3) to convert a single file to MP3"
 echo "Type (4) to convert a batch to MP3"
-read input
+read -r input
 
 case "$input" in
 	1)
@@ -85,7 +82,7 @@ case "$input" in
 		;;
 	2)
 		echo "Please drag (or fill in the file path of) the folder here, and press ENTER."
-		read file_path 
+		read -r file_path 
 		cp $current_directory/Transcoder.sh $file_path
 		cd $file_path 
 		check_ffmpeg
@@ -100,7 +97,7 @@ case "$input" in
 		;;
 	4)
 		echo "Please drag (or fill in the file path of) the folder here, and press ENTER."
-		read file_path
+		read -r file_path
 		cp $current_directory/Transcoder.sh $file_path
 		cd $file_path
 		check_ffmpeg
