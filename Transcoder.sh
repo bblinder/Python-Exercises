@@ -13,7 +13,7 @@ single_convert(){
 	echo "Drag and Drop file HERE : "
 	
 	while read -r I; do
-		ffmpeg -i "${I}" -c:v libx264 -c:a libvo_aacenc -crf 20 -r 30 \
+		ffmpeg -i "${I}" -c:v libx264 -c:a libfdk_aac -crf 20 -aspect 16:9 -r 30 \
 			"${I/%.*/.mp4}" > /dev/null & 2>/dev/null
 	done
 	exit 0
@@ -26,7 +26,7 @@ single_convert(){
 
 batch_convert(){
 	for fname in *.flv; do
-		ffmpeg -i "$fname" -c:v libx264 -c:a libvo_aacenc -crf 20 -r 30 "${fname%.*}.mp4"
+		ffmpeg -i "$fname" -c:v libx264 -c:a libfdk_aac -crf 20 -aspect 16:9 -r 30 "${fname%.*}.mp4"
 	done
 }
 
